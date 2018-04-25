@@ -30,7 +30,7 @@ perform all kinds of operations with `.execute()`.
 
 [sqlite3]: https://docs.python.org/3/library/sqlite3.html
 
-```python
+~~~
 import sqlite3
 
 # Create a SQL connection to our SQLite database
@@ -44,7 +44,8 @@ for row in cur.execute('SELECT * FROM species;'):
 
 # Be sure to close the connection
 con.close()
-```
+~~~
+{: .language-python }
 
 ### Queries
 
@@ -53,7 +54,7 @@ retrieving data based on some search parameters. Use a SELECT statement string.
 The query is returned as a single tuple or a tuple of tuples. Add a WHERE
 statement to filter your results based on some parameter.
 
-```python
+~~~
 import sqlite3
 
 # Create a SQL connection to our SQLite database
@@ -71,7 +72,8 @@ cur.fetchone()
 
 # Be sure to close the connection
 con.close()
-```
+~~~
+{: .language-python }
 
 ## Accessing data stored in SQLite using Python and Pandas
 
@@ -79,7 +81,7 @@ Using pandas, we can import results of a SQLite query into a dataframe. Note
 that you can use the same SQL commands / syntax that we used in the SQLite
 lesson. An example of using pandas together with sqlite is below:
 
-```python
+~~~
 import pandas as pd
 import sqlite3
 
@@ -91,7 +93,8 @@ df = pd.read_sql_query("SELECT * from surveys", con)
 print(df.head())
 
 con.close()
-```
+~~~
+{: .language-python }
 
 ## Storing data: CSV vs SQLite
 
@@ -118,7 +121,7 @@ benchmarks]).
 
 We can also us pandas to create new tables within an SQLite database. Here, we run we re-do an excercise we did before with CSV files using our SQLite database. We first read in our survey data, then select only those survey results for 2002, and then save it out to its own table so we can work with it on its own later.
 
-```python
+~~~
 import pandas as pd
 import sqlite3
 
@@ -134,7 +137,8 @@ surveys2002 = surveys_df[surveys_df.year == 2002]
 surveys2002.to_sql("surveys2002", con, if_exists="replace")
 
 con.close()
-```
+~~~
+{: .language-python }
 
 > ## Challenge - Saving your work
 >

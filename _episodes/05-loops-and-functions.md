@@ -30,7 +30,7 @@ errors by making mistakes while processing each file by hand.
 Let's write a simple for loop that simulates what a kid might see during a
 visit to the zoo:
 
-```python
+~~~
 >>> animals = ['lion', 'tiger', 'crocodile', 'vulture', 'hippo']
 >>> print(animals)
 ['lion', 'tiger', 'crocodile', 'vulture', 'hippo']
@@ -42,7 +42,8 @@ tiger
 crocodile
 vulture
 hippo
-```
+~~~
+{: .language-python }
 
 The line defining the loop must start with `for` and end with a colon, and the
 body of the loop must be indented.
@@ -52,14 +53,15 @@ entry in `animals` every time the loop goes around. We can call the loop variabl
 anything we like. After the loop finishes, the loop variable will still exist
 and will have the value of the last entry in the collection:
 
-```python
+~~~
 >>> animals = ['lion', 'tiger', 'crocodile', 'vulture', 'hippo']
 >>> for creature in animals:
 ...    pass
 
 >>> print('The loop variable is now: ' + creature)
 The loop variable is now: hippo
-```
+~~~
+{: .language-python }
 
 We are not asking python to print the value of the loop variable anymore, but
 the for loop still runs and the value of `creature` changes on each pass through
@@ -83,16 +85,17 @@ file.
 Let's start by making a new directory inside the folder `data` to store all of
 these files using the module `os`:
 
-```python
+~~~
     import os
 
     os.mkdir('data/yearly_files')
-```
+~~~
+{: .language-python }
 
 The command `os.mkdir` is equivalent to `mkdir` in the shell. Just so we are
 sure, we can check that the new directory was created within the `data` folder:
 
-```python
+~~~
 >>> os.listdir('data')
 ['plots.csv',
  'portal_mammals.sqlite',
@@ -102,7 +105,8 @@ sure, we can check that the new directory was created within the `data` folder:
  'surveys.csv',
  'surveys2002_temp.csv',
  'yearly_files']
-```
+~~~
+{: .language-python }
 
 The command `os.listdir` is equivalent to `ls` in the shell.
 
@@ -111,7 +115,7 @@ data into memory as a DataFrame, how to select a subset of the data using some
 criteria, and how to write the DataFrame into a CSV file. Let's write a script
 that performs those three steps in sequence for the year 2002:
 
-```python
+~~~
 import pandas as pd
 
 # Load the data into a DataFrame
@@ -122,7 +126,8 @@ surveys2002 = surveys_df[surveys_df.year == 2002]
 
 # Write the new DataFrame to a CSV file
 surveys2002.to_csv('data/yearly_files/surveys2002.csv')
-```
+~~~
+{: .language-python }
 
 To create yearly data files, we could repeat the last two commands over and
 over, once for each year of data. Repeating code is neither elegant nor
@@ -138,7 +143,7 @@ confirm that the loop is behaving as we expect.
 We have seen that we can loop over a list of items, so we need a list of years
 to loop over. We can get the years in our DataFrame with:
 
-```python
+~~~
 >>> surveys_df['year']
 
 0        1977
@@ -150,21 +155,23 @@ to loop over. We can get the years in our DataFrame with:
 35546    2002
 35547    2002
 35548    2002
-```
+~~~
+{: .language-python }
 
 but we want only unique years, which we can get using the `unique` method
 which we have already seen.  
 
-```python
+~~~
 >>> surveys_df['year'].unique()
 array([1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987,
        1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
        1999, 2000, 2001, 2002], dtype=int64)
-```
+~~~
+{: .language-python }
 
 Putting this into our for loop we get
 
-```python
+~~~
 >>> for year in surveys_df['year'].unique():
 ...    filename='data/yearly_files/surveys' + str(year) + '.csv'
 ...    print(filename)
@@ -195,11 +202,12 @@ data/yearly_files/surveys1999.csv
 data/yearly_files/surveys2000.csv
 data/yearly_files/surveys2001.csv
 data/yearly_files/surveys2002.csv
-```
+~~~
+{: .language-python }
 
 We can now add the rest of the steps we need to create separate text files:
 
-```python
+~~~
 # Load the data into a DataFrame
 surveys_df = pd.read_csv('data/surveys.csv')
 
@@ -211,7 +219,8 @@ for year in surveys_df['year'].unique():
     # Write the new DataFrame to a CSV file
     filename = 'data/yearly_files/surveys' + str(year) + '.csv'
     surveys_year.to_csv(filename)
-```
+~~~
+{: .language-python }
 
 Look inside the `yearly_files` directory and check a couple of the files you
 just created to confirm that everything worked as expected.
@@ -272,7 +281,7 @@ easy to write functions that can be used by different programs.
 
 Functions are declared following this general structure:
 
-```python
+~~~
 def this_is_the_function_name(input_argument1, input_argument2):
 
     # The body of the function is indented
@@ -281,7 +290,8 @@ def this_is_the_function_name(input_argument1, input_argument2):
 
     # And returns their product
     return input_argument1 * input_argument2
-```
+~~~
+{: .language-python }
 
 The function declaration starts with the word `def`, followed by the function
 name and any arguments in parenthesis, and ends in a colon. The body of the
@@ -290,13 +300,14 @@ it is called, it includes a return statement at the end.
 
 This is how we call the function:
 
-```python
+~~~
 >>> product_of_inputs = this_is_the_function_name(2,5)
 The function arguments are: 2 5 (this is done inside the function!)
 
 >>> print('Their product is:', product_of_inputs, '(this is done outside the function!)')
 Their product is: 10 (this is done outside the function!)
-```
+~~~
+{: .language-python }
 
 > ## Challenge - Functions
 >
@@ -315,7 +326,7 @@ many different "chunks" of this code that we can turn into functions, and we can
 even create functions that call other functions inside them. Let's first write a
 function that separates data for just one year and saves that data to a file:
 
-```python
+~~~
 def one_year_csv_writer(this_year, all_data):
     """
     Writes a csv file for data from a given year.
@@ -330,7 +341,8 @@ def one_year_csv_writer(this_year, all_data):
     # Write the new DataFrame to a csv file
     filename = 'data/yearly_files/function_surveys' + str(this_year) + '.csv'
     surveys_year.to_csv(filename)
-```
+~~~
+{: .language-python }
 
 The text between the two sets of triple double quotes is called a docstring and
 contains the documentation for the function. It does nothing when the function
@@ -338,13 +350,15 @@ is running and is therefore not necessary, but it is good practice to include
 docstrings as a reminder of what the code does. Docstrings in functions also
 become part of their 'official' documentation:
 
-```python
+~~~
 one_year_csv_writer?
-```
+~~~
+{: .language-python }
 
-```python
+~~~
 one_year_csv_writer(2002, surveys_df)
-```
+~~~
+{: .language-python }
 
 We changed the root of the name of the CSV file so we can distinguish it from
 the one we wrote before. Check the `yearly_files` directory for the file. Did it
@@ -356,7 +370,7 @@ the entire For loop by simply looping through a sequence of years and repeatedly
 calling the function we just wrote, `one_year_csv_writer`:
 
 
-```python
+~~~
 def yearly_data_csv_writer(start_year, end_year, all_data):
     """
     Writes separate CSV files for each year of data.
@@ -369,7 +383,8 @@ def yearly_data_csv_writer(start_year, end_year, all_data):
     # "end_year" is the last year of data we want to pull, so we loop to end_year+1
     for year in range(start_year, end_year+1):
         one_year_csv_writer(year, all_data)
-```
+~~~
+{: .language-python }
 
 Because people will naturally expect that the end year for the files is the last
 year with data, the for loop inside the function ends at `end_year + 1`. By
@@ -379,13 +394,14 @@ first and last year for which we want files, we can even use this function to
 create files for a subset of the years available. This is how we call this
 function:
 
-```python
+~~~
 # Load the data into a DataFrame
 surveys_df = pd.read_csv('data/surveys.csv')
 
 # Create CSV files
 yearly_data_csv_writer(1977, 2002, surveys_df)
-```
+~~~
+{: .language-python }
 
 BEWARE! If you are using IPython Notebooks and you modify a function, you MUST
 re-run that cell in order for the changed function to be available to the rest
@@ -422,7 +438,7 @@ sign in the function declaration. Any arguments in the function without default
 values (here, `all_data`) is a required argument and MUST come before the
 argument with default values (which are optional in the function call).
 
-```python
+~~~
     def yearly_data_arg_test(all_data, start_year = 1977, end_year = 2002):
         """
         Modified from yearly_data_csv_writer to test default argument values!
@@ -440,7 +456,8 @@ argument with default values (which are optional in the function call).
 
     start,end = yearly_data_arg_test (surveys_df)
     print('Default values:\t\t\t', start, end)
-```
+~~~
+{: .language-python }
 
 ```
     Both optional arguments:	1988 1993
@@ -454,7 +471,7 @@ But what if our dataset doesn't start in 1977 and end in 2002? We can modify the
 function so that it looks for the start and end years in the dataset if those
 dates are not provided:
 
-```python
+~~~
     def yearly_data_arg_test(all_data, start_year = None, end_year = None):
         """
         Modified from yearly_data_csv_writer to test default argument values!
@@ -477,7 +494,9 @@ dates are not provided:
 
     start,end = yearly_data_arg_test (surveys_df)
     print('Default values:\t\t\t', start, end)
-```
+~~~
+{: .language-python }
+
 ```
     Both optional arguments:	1988 1993
     Default values:		1977 2002
@@ -510,7 +529,7 @@ The body of the test function now has two conditionals (if statements) that
 check the values of `start_year` and `end_year`. If statements execute a segment
 of code when some condition is met. They commonly look something like this:
 
-```python
+~~~
     a = 5
 
     if a<0:  # Meets first condition?
@@ -527,7 +546,8 @@ of code when some condition is met. They commonly look something like this:
 
         # if a ISN'T less than zero and ISN'T more than zero
         print('a must be zero!')
-```
+~~~
+{: .language-python }
 
 Which would return:
 
@@ -556,7 +576,7 @@ calling the function using keyword arguments, where each of the arguments in the
 function definition is associated with a keyword and the function call passes
 values to the function using these keywords:
 
-```python
+~~~
     start,end = yearly_data_arg_test (surveys_df)
     print('Default values:\t\t\t', start, end)
 
@@ -574,7 +594,9 @@ values to the function using these keywords:
 
     start,end = yearly_data_arg_test (surveys_df, end_year = 1993)
     print('One keyword, default start:\t', start, end)
-```
+~~~
+{: .language-python }
+
 ```
     Default values:		1977 2002
     No keywords:		1988 1993
@@ -598,13 +620,14 @@ values to the function using these keywords:
 > doesn't. Add some code to your function that writes out the CSV files, to check
 > for a directory to write to.
 >
-> ```Python
+> ~~~
 >	if 'dir_name_here' in os.listdir('.'):
 >	    print('Processed directory exists')
 >	else:
 >	    os.mkdir('dir_name_here')
 >	    print('Processed directory created')
-> ```
+> ~~~
+> {: .language-python }
 >
 > 4. The code that you have written so far to loop through the years is good,
 > however it is not necessarily reproducible with different datasets.
